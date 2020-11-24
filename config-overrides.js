@@ -1,10 +1,9 @@
-const { addBabelPlugin, override } = require('customize-cra');
+const jestConfig = require('./jest.config');
 
-module.exports = override(
-  addBabelPlugin([
-    'babel-plugin-root-import',
-    {
-      rootPathSuffix: 'src',
-    },
-  ])
-);
+module.exports = {
+  jest(config) {
+    config.preset = jestConfig.preset;
+    config.reporters = jestConfig.reporters;
+    return config;
+  },
+};
