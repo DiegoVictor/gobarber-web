@@ -27,6 +27,27 @@
     "test": "react-app-rewired test --env=jest-environment-jsdom-sixteen",
     "eject": "react-scripts eject"
   },
+  "jest": {
+    "roots": [
+      "<rootDir>/src/",
+      "<rootDir>/tests/"
+    ],
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "src/pages/**/*.tsx",
+      "src/components/**/*.tsx",
+      "src/hooks/**/*.tsx",
+      "!src/hooks/index.tsx",
+      "!src/routes/**/*.tsx",
+      "!src/services/*.ts",
+      "!src/styles/*.ts",
+      "!src/*.tsx"
+    ],
+    "coverageDirectory": "tests/coverage",
+    "testMatch": [
+      "**/tests/**/*.spec.(ts|tsx)"
+    ]
+  },
   "eslintConfig": {
     "extends": "react-app"
   },
