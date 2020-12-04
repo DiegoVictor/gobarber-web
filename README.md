@@ -96,12 +96,4 @@ $ npm run test
 ```
 
 ## Coverage Report
-To generate/update the coverage report:
-```
-$ yarn coverage
-```
-Or:
-```
-$ npm run coverage
-```
-> You can see the coverage report inside `tests/coverage`.
+You can see the coverage report inside `tests/coverage`. They are automatically created after the tests run.
