@@ -65,7 +65,7 @@ npm run start
 ```
 
 ## localStorage
-The project saves users's data and token into [localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) keys: `@GoBarber:user` and `@GoBarber:token`. Before use `@GoBarber:user` data you need parse the data to a JavaScript object with [`JSON.parse`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse) function. Below you can see fictitious data:
+The project saves users's data and token into [localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) keys: `@GoBarber:user` and `@GoBarber:token`. Before use `@GoBarber:user` data you need parse the data to a JavaScript object with [JSON.parse](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse) function. Below you can see fictitious data:
 
 * `@GoBarber:user`
 ```json
