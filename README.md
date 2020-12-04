@@ -70,13 +70,13 @@ The project saves users's data and token into [localStorage](https://developer.m
 * `@GoBarber:user`
 ```json
 {
-  id: "01931fee-32d4-4af7-b4e9-12159c5d703e",
-  name: "John Doe",
-  email: "johndoe@example.com",
-  avatar: "52bde824dff12071c7df-20200219_214816.jpg",
-  created_at: "2020-06-07T21:16:15.754Z",
-  updated_at: "2020-11-20T04:06:15.975Z",
-  avatar_url: "http://127.0.0.1:3333/uploads/52bde824dff12071c7df-20200219_214816.jpg"
+  "id": "01931fee-32d4-4af7-b4e9-12159c5d703e",
+  "name": "John Doe",
+  "email": "johndoe@example.com",
+  "avatar": "52bde824dff12071c7df-20200219_214816.jpg",
+  "created_at": "2020-06-07T21:16:15.754Z",
+  "updated_at": "2020-11-20T04:06:15.975Z",
+  "avatar_url": "http://127.0.0.1:3333/uploads/52bde824dff12071c7df-20200219_214816.jpg"
 }
 ```
 
