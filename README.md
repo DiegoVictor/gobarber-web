@@ -1,4 +1,4 @@
-# [Web] Be The Hero
+# [Web] GoBaber
 [![Travis (.org)](https://img.shields.io/travis/DiegoVictor/gobarber-web?logo=travis&style=flat-square)](https://travis-ci.org/DiegoVictor/gobarber-web)
 [![react](https://img.shields.io/badge/reactjs-16.14.0-61dafb?style=flat-square&logo=react)](https://reactjs.org/)
 [![styled-components](https://img.shields.io/badge/styled_components-5.2.1-db7b86?style=flat-square&logo=styled-components)](https://styled-components.com/)
