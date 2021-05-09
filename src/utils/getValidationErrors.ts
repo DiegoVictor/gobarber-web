@@ -7,8 +7,7 @@ interface ErrorBag {
 export default (err: ValidationError): ErrorBag => {
   const validationErrors: ErrorBag = {};
 
-  err.inner.forEach(error => {
-    validationErrors[error.path] = error.message;
+  err.inner.forEach((error: ValidationError) => {
   });
   return validationErrors;
 };
