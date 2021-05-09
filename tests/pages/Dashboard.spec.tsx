@@ -30,7 +30,7 @@ jest.mock('react-router-dom', () => {
   };
 });
 
-const user_id = faker.random.uuid();
+const user_id = faker.datatype.uuid();
 
 const mockedSignOut = jest.fn();
 const mockedUseAuth = (): {
