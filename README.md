@@ -82,7 +82,7 @@ The project saves users's data and token into [localStorage](https://developer.m
 ```
 
 * `@GoBarber:token`
-```json
+```
 eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MDU4MzQ4MDcsImV4cCI6MTYwNTkyMTIwNywic3ViIjoiMDE5MzFmZWUtMzJkNC00YWY3LWI0ZTktMTIxNTljNWQ3MDNlIn0.uzMK3TufipdyIrKxqakOhJtNF3VH7zkHPAfjTUae2q8
 ```
 
