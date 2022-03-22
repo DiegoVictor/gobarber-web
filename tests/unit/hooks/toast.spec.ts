@@ -1,14 +1,18 @@
 import { renderHook, act } from '@testing-library/react-hooks';
 
-import { ToastProvider, useToast } from '../../src/hooks/toast';
-import factory from '../utils/factory';
+import {
+  ToastMessage,
+  ToastProvider,
+  useToast,
+} from '../../../src/hooks/toast';
+import factory from '../../utils/factory';
 
 describe('Toast hook', () => {
   it('should be able to add/remove a toast', async () => {
     const { result } = renderHook(() => useToast(), {
       wrapper: ToastProvider,
     });
-    const message = await factory.attrs('Toast');
+    const message = await factory.attrs<ToastMessage>('Toast');
 
     act(() => {
       result.current.addToast(message);

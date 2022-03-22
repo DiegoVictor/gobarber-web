@@ -2,15 +2,15 @@ import { renderHook, act } from '@testing-library/react-hooks';
 import MockAdapter from 'axios-mock-adapter';
 import faker from 'faker';
 
-import { useAuth, AuthProvider } from '../../src/hooks/auth';
-import api from '../../src/services/api';
-import factory from '../utils/factory';
+import { useAuth, AuthProvider, User } from '../../../src/hooks/auth';
+import api from '../../../src/services/api';
+import factory from '../../utils/factory';
 
 describe('Auth hook', () => {
   const apiMock = new MockAdapter(api);
 
   it('should be able to sign in', async () => {
-    const user = await factory.attrs('User');
+    const user = await factory.attrs<User>('User');
     const token = faker.random.alphaNumeric(10);
 
     const response = {
@@ -41,7 +41,7 @@ describe('Auth hook', () => {
   });
 
   it('should restore saved data from storage when auth inits', async () => {
-    const user = await factory.attrs('User');
+    const user = await factory.attrs<User>('User');
     const token = faker.random.alphaNumeric(10);
     jest.spyOn(Storage.prototype, 'getItem').mockImplementation(key => {
       switch (key) {
@@ -95,7 +95,7 @@ describe('Auth hook', () => {
 
   it('should be able to update user data', async () => {
     const setItemSpy = jest.spyOn(Storage.prototype, 'setItem');
-    const user = await factory.attrs('User');
+    const user = await factory.attrs<User>('User');
 
     const { result } = renderHook(() => useAuth(), {
       wrapper: AuthProvider,
