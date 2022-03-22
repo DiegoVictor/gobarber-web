@@ -1,11 +1,12 @@
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
 
-import Toast from '../../src/components/ToastContainer/Toast';
-import factory from '../utils/factory';
+import Toast from '../../../src/components/ToastContainer/Toast';
+import factory from '../../utils/factory';
+import { ToastMessage } from '../../../src/hooks/toast';
 
 const mockedRemoveToast = jest.fn();
-jest.mock('../../src/hooks/toast', () => {
+jest.mock('../../../src/hooks/toast', () => {
   return {
     useToast: () => ({
       removeToast: mockedRemoveToast,
@@ -19,7 +20,7 @@ describe('Toast component', () => {
   });
 
   it('should be able to remove the toast', async () => {
-    const message = await factory.attrs('Toast');
+    const message = await factory.attrs<Required<ToastMessage>>('Toast');
     const { getByText, getByTestId } = render(
       <Toast message={message} style={{}} />,
     );
@@ -35,7 +36,7 @@ describe('Toast component', () => {
   it('should be able to automatically remove yourself', async () => {
     jest.useFakeTimers();
 
-    const message = await factory.attrs('Toast');
+    const message = await factory.attrs<Required<ToastMessage>>('Toast');
     const { getByText } = render(<Toast message={message} style={{}} />);
 
     expect(getByText(message.title)).toBeInTheDocument();
