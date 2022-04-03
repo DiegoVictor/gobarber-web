@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent, act } from '@testing-library/react';
-import faker from 'faker';
+import faker from '@faker-js/faker';
 
 import * as Auth from '../../src/hooks/auth';
 import SignIn from '../../src/pages/SignIn';

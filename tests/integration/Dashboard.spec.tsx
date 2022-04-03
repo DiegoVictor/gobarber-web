@@ -1,7 +1,7 @@
 import React from 'react';
 import { act, fireEvent, render, waitFor } from '@testing-library/react';
 import MockAdapter from 'axios-mock-adapter';
-import faker from 'faker';
+import faker from '@faker-js/faker';
 import ptBR from 'date-fns/locale/pt-BR';
 import { addMonths, format, setHours } from 'date-fns';
 

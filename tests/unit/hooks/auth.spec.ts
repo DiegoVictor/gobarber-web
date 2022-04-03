@@ -1,6 +1,6 @@
 import { renderHook, act } from '@testing-library/react-hooks';
 import MockAdapter from 'axios-mock-adapter';
-import faker from 'faker';
+import faker from '@faker-js/faker';
 
 import { useAuth, AuthProvider, User } from '../../../src/hooks/auth';
 import api from '../../../src/services/api';
