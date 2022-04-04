@@ -1,4 +1,5 @@
-import { renderHook, act } from '@testing-library/react-hooks';
+import { act } from '@testing-library/react';
+import { renderHook } from '@testing-library/react-hooks';
 
 import {
   ToastMessage,
@@ -14,7 +15,7 @@ describe('Toast hook', () => {
     });
     const message = await factory.attrs<ToastMessage>('Toast');
 
-    act(() => {
+    await act(async () => {
       result.current.addToast(message);
     });
 
@@ -24,7 +25,7 @@ describe('Toast hook', () => {
     });
 
     const [{ id }] = result.current.messages;
-    act(() => {
+    await act(async () => {
       result.current.removeToast(id);
     });
 
