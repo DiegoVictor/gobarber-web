@@ -1,4 +1,10 @@
-import React, { createContext, useCallback, useState, useContext } from 'react';
+import React, {
+  createContext,
+  useCallback,
+  useState,
+  useContext,
+  useMemo,
+} from 'react';
 
 import api from '../services/api';
 
@@ -71,12 +77,18 @@ export const AuthProvider: React.FC = ({ children }) => {
     [setData, data.token],
   );
 
+  const context = useMemo(
+    () => ({
+      user: data.user,
+      signIn,
+      signOut,
+      updateUser,
+    }),
+    [data.user, signIn, signOut, updateUser],
+  );
+
   return (
-    <AuthContext.Provider
-      value={{ user: data.user, signIn, signOut, updateUser }}
-    >
-      {children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={context}>{children}</AuthContext.Provider>
   );
 };
 
