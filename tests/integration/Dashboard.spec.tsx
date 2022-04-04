@@ -69,7 +69,7 @@ jest.mock('../../src/hooks/toast', () => {
   };
 });
 
-let mockedIsToday = jest.fn(() => false);
+const mockedIsToday = jest.fn(() => false);
 jest.mock('date-fns', () => {
   return {
     ...jest.requireActual('date-fns'),
@@ -247,6 +247,7 @@ describe('Dashboard page', () => {
       }
     });
 
+    mockedIsToday.mockReturnValue(true);
     const appointments = await factory.attrsMany<Appointment>(
       'Appointment',
       2,
@@ -271,9 +272,9 @@ describe('Dashboard page', () => {
     const { getByText, getByTestId } = render(<Dashboard />);
     const [morning, afternoon] = appointments;
 
-    await waitFor(() => expect(getByText('Hoje')).toBeInTheDocument());
-
-    expect(getByText('Agendamento a seguir')).toBeInTheDocument();
+    await waitFor(() =>
+      expect(getByText('Agendamento a seguir')).toBeInTheDocument(),
+    );
 
     expect(getByTestId('next-appointment-date')).toHaveTextContent(
       format(Date.now(), "'Dia' dd 'de' MMMM", { locale: ptBR }),
