@@ -7,6 +7,11 @@ import Profile from '../../src/pages/Profile';
 import api from '../../src/services/api';
 import factory from '../utils/factory';
 
+interface User {
+  name: string;
+  email: string;
+}
+
 const mockedHistoryPush = jest.fn();
 jest.mock('react-router-dom', () => {
   return {
@@ -59,7 +64,7 @@ describe('Profile page', () => {
   });
 
   it('should be able to update user data', async () => {
-    const user = await factory.attrs('User');
+    const user = await factory.attrs<User>('User');
     const password = faker.random.alphaNumeric(15);
     const newPassword = faker.random.alphaNumeric(15);
 

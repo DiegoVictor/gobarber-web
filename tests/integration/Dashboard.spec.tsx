@@ -9,6 +9,14 @@ import Dashboard from '../../src/pages/Dashboard';
 import api from '../../src/services/api';
 import factory from '../utils/factory';
 
+interface Appointment {
+  id: string;
+  user: {
+    avatar_url: string;
+  };
+  date: Date;
+}
+
 const mockedHistoryPush = jest.fn();
 jest.mock('react-router-dom', () => {
   return {
@@ -239,11 +247,11 @@ describe('Dashboard page', () => {
       }
     });
 
-    mockedIsToday = jest.fn(() => true);
-    const appointments = await factory.attrsMany('Appointment', 2, [
-      { date: setHours(date, 10) },
-      { date: setHours(date, 16) },
-    ]);
+    const appointments = await factory.attrsMany<Appointment>(
+      'Appointment',
+      2,
+      [{ date: setHours(date, 10) }, { date: setHours(date, 16) }],
+    );
 
     jest.spyOn(Date, 'now').mockImplementation(() => {
       return setHours(date, 9).getTime();
@@ -312,7 +320,9 @@ describe('Dashboard page', () => {
 
   it('should be able to see the next appointment skipping weekends', async () => {
     const date = new Date(2020, 10, 6, 9);
-    const appointment = await factory.attrs('Appointment', { date });
+    const appointment = await factory.attrs<Appointment>('Appointment', {
+      date,
+    });
 
     jest.spyOn(Date, 'now').mockImplementation(() => {
       return new Date(2020, 9, 3).getTime();
