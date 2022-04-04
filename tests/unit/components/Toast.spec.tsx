@@ -1,5 +1,6 @@
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
+import { SpringValue } from 'react-spring';
 
 import Toast from '../../../src/components/ToastContainer/Toast';
 import factory from '../../utils/factory';
@@ -22,7 +23,13 @@ describe('Toast component', () => {
   it('should be able to remove the toast', async () => {
     const message = await factory.attrs<Required<ToastMessage>>('Toast');
     const { getByText, getByTestId } = render(
-      <Toast message={message} style={{}} />,
+      <Toast
+        message={message}
+        style={{
+          right: new SpringValue(),
+          opacity: new SpringValue(),
+        }}
+      />,
     );
 
     expect(getByText(message.title)).toBeInTheDocument();
@@ -37,7 +44,15 @@ describe('Toast component', () => {
     jest.useFakeTimers();
 
     const message = await factory.attrs<Required<ToastMessage>>('Toast');
-    const { getByText } = render(<Toast message={message} style={{}} />);
+    const { getByText } = render(
+      <Toast
+        message={message}
+        style={{
+          right: new SpringValue(),
+          opacity: new SpringValue(),
+        }}
+      />,
+    );
 
     expect(getByText(message.title)).toBeInTheDocument();
     expect(getByText(message.description)).toBeInTheDocument();
