@@ -5,13 +5,17 @@ import {
   FiInfo,
   FiXCircle,
 } from 'react-icons/fi';
+import { SpringValue } from 'react-spring';
 
 import { ToastMessage, useToast } from '../../../hooks/toast';
 import { Container } from './styles';
 
 interface ToastProps {
   message: ToastMessage;
-  style: { [key: string]: string | number | undefined };
+  style: {
+    right: SpringValue<string>;
+    opacity: SpringValue<number>;
+  };
 }
 
 const icons = {
