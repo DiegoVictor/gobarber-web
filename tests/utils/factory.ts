@@ -6,7 +6,7 @@ factory.define(
   {},
   {
     id: () => String(faker.datatype.number()),
-    title: faker.name.title,
+    title: faker.name.jobTitle,
     description: faker.lorem.paragraph,
   },
 );
