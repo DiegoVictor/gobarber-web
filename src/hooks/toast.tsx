@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useCallback, useState } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useCallback,
+  useState,
+  useMemo,
+} from 'react';
 import { v4 } from 'uuid';
 
 import ToastContainer from '../components/ToastContainer';
@@ -40,8 +46,17 @@ export const ToastProvider: React.FC = ({ children }) => {
     setMessages(state => state.filter(message => message.id !== id));
   }, []);
 
+  const context = useMemo(
+    () => ({
+      addToast,
+      removeToast,
+      messages,
+    }),
+    [addToast, removeToast, messages],
+  );
+
   return (
-    <ToastContext.Provider value={{ addToast, removeToast, messages }}>
+    <ToastContext.Provider value={context}>
       {children}
       <ToastContainer messages={messages} />
     </ToastContext.Provider>
