@@ -18,7 +18,7 @@ interface ResetPasswordFormData {
   password_confirmation: string;
 }
 
-const ResetPasswrd: React.FC = () => {
+const ResetPassword: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
   const { addToast } = useToast();
   const history = useHistory();
@@ -102,4 +102,4 @@ const ResetPasswrd: React.FC = () => {
   );
 };
 
-export default ResetPasswrd;
+export default ResetPassword;
