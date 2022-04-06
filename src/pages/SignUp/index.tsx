@@ -3,7 +3,7 @@ import { FiArrowLeft, FiMail, FiLock, FiUser } from 'react-icons/fi';
 import { Form } from '@unform/web';
 import * as Yup from 'yup';
 import { FormHandles } from '@unform/core';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import Logo from '../../assets/logo.svg';
 import Input from '../../components/Input';
@@ -22,7 +22,7 @@ interface SignUpFormData {
 const SignUp: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
   const { addToast } = useToast();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleSubmit = useCallback(
     async (data: SignUpFormData) => {
@@ -45,7 +45,7 @@ const SignUp: React.FC = () => {
           title: 'Cadastro realizado!',
           description: 'Você já pode fazer seu logon no GoBarber!',
         });
-        history.push('/');
+        navigate('/');
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err);
@@ -60,7 +60,7 @@ const SignUp: React.FC = () => {
         }
       }
     },
-    [addToast, history],
+    [addToast, navigate],
   );
 
   return (

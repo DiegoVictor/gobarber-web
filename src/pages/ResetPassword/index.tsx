@@ -3,7 +3,7 @@ import { FiLock } from 'react-icons/fi';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import Logo from '../../assets/logo.svg';
 import Input from '../../components/Input';
@@ -21,7 +21,7 @@ interface ResetPasswordFormData {
 const ResetPassword: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
   const { addToast } = useToast();
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
 
   const handleSubmit = useCallback(
@@ -53,7 +53,7 @@ const ResetPassword: React.FC = () => {
           token,
         });
 
-        history.push('/');
+        navigate('/');
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err);
@@ -68,7 +68,7 @@ const ResetPassword: React.FC = () => {
         }
       }
     },
-    [addToast, history, location],
+    [addToast, navigate, location],
   );
 
   return (

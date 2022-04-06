@@ -3,7 +3,7 @@ import { FiMail, FiLock, FiUser, FiCamera, FiArrowLeft } from 'react-icons/fi';
 import { Form } from '@unform/web';
 import * as Yup from 'yup';
 import { FormHandles } from '@unform/core';
-import { useHistory, Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import Input from '../../components/Input';
 import Button from '../../components/Button';
@@ -24,7 +24,7 @@ interface ProfileFormData {
 const Profile: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
   const { addToast } = useToast();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const { user, updateUser } = useAuth();
 
@@ -53,13 +53,8 @@ const Profile: React.FC = () => {
 
         await schema.validate(data, { abortEarly: false });
 
-        const {
-          name,
-          email,
-          old_password,
-          password,
-          password_confirmation,
-        } = data;
+        const { name, email, old_password, password, password_confirmation } =
+          data;
         const formData = {
           name,
           email,
@@ -80,7 +75,7 @@ const Profile: React.FC = () => {
           description:
             'Suas informações do perfil foram atualizadas com sucesso!',
         });
-        history.push('/dashboard');
+        navigate('/dashboard');
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err);
@@ -95,7 +90,7 @@ const Profile: React.FC = () => {
         }
       }
     },
-    [addToast, history, updateUser],
+    [addToast, navigate, updateUser],
   );
 
   const handleAvatarChange = useCallback(
