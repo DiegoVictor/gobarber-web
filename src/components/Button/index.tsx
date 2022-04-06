@@ -14,4 +14,8 @@ const Button: React.FC<ButtonProps> = ({ children, loading, ...props }) => {
   );
 };
 
+Button.defaultProps = {
+  loading: false,
+};
+
 export default Button;
