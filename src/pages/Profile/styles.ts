@@ -10,7 +10,6 @@ export const Container = styled.div`
 
     > div {
       margin: 0px auto;
-      max-width: 1120px;
       width: 100%;
 
       svg {
