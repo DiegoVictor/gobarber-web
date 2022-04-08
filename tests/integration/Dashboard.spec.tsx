@@ -79,6 +79,29 @@ jest.mock('date-fns', () => {
   };
 });
 
+const mockClick = jest.fn();
+jest.mock('react-day-picker', () => {
+  return {
+    DayPicker: function FakeDayPicker({
+      onDayClick,
+      onMonthChange,
+    }: {
+      onDayClick: () => void;
+      onMonthChange: () => void;
+    }) {
+      return (
+        <button
+          type="button"
+          data-testid="calendar"
+          onClick={() => mockClick({ onDayClick, onMonthChange })}
+        >
+          Calendar
+        </button>
+      );
+    },
+  };
+});
+
 describe('Dashboard page', () => {
   const apiMock = new MockAdapter(api);
 
@@ -138,7 +161,7 @@ describe('Dashboard page', () => {
     });
   });
 
-  it('should be able to select only available days', async () => {
+  it('should be able to set a different date', async () => {
     const date = new Date(2020, 9, 6);
     jest.spyOn(Date, 'now').mockImplementation(() => {
       return date.getTime();
@@ -147,22 +170,6 @@ describe('Dashboard page', () => {
     apiMock
       .onGet(`/providers/${user_id}/month_availability`)
       .reply(200, [
-        {
-          day: 1,
-          available: false,
-        },
-        {
-          day: 2,
-          available: false,
-        },
-        {
-          day: 3,
-          available: false,
-        },
-        {
-          day: 4,
-          available: false,
-        },
         {
           day: 5,
           available: false,
@@ -179,33 +186,26 @@ describe('Dashboard page', () => {
       .onGet('/appointments/schedule')
       .reply(200, []);
 
-    const { getAllByRole, getByTestId } = render(<Dashboard />);
-    const days = getAllByRole('gridcell');
+    const selectedDate = new Date(2020, 9, 7);
+    mockClick.mockImplementation(({ onDayClick }) => {
+      onDayClick(selectedDate, { available: true, disabled: false });
+    });
+
+    const { getByTestId } = render(<Dashboard />);
 
     await act(async () => {
-      fireEvent.click(days[5]);
+      fireEvent.click(getByTestId('calendar'));
     });
 
     expect(getByTestId('next-appointment-date')).toHaveTextContent(
-      format(date, "'Dia' dd 'de' MMMM", { locale: ptBR }),
-    );
-
-    await act(async () => {
-      fireEvent.click(days[6]);
-    });
-
-    date.setDate(date.getDate() + 1);
-
-    expect(getByTestId('next-appointment-date')).toHaveTextContent(
-      format(date, "'Dia' dd 'de' MMMM", {
-        locale: ptBR,
-      }),
+      format(selectedDate, "'Dia' dd 'de' MMMM", { locale: ptBR }),
     );
   });
 
-  it('should be able to change the calendar month', async () => {
+  it('should be able to set a different month', async () => {
+    const date = new Date(2020, 9, 6);
     jest.spyOn(Date, 'now').mockImplementation(() => {
-      return new Date(2020, 9, 6).getTime();
+      return date.getTime();
     });
 
     apiMock
@@ -214,28 +214,18 @@ describe('Dashboard page', () => {
       .onGet('/appointments/schedule')
       .reply(200, []);
 
-    const { container } = render(<Dashboard />);
-    const nextButton = container.querySelector('.DayPicker-NavButton--next');
-
-    expect(nextButton).toBeInTheDocument();
-    await act(async () => {
-      if (nextButton) {
-        fireEvent.click(nextButton);
-      }
+    const selectedMonth = new Date(2020, 10);
+    mockClick.mockImplementation(({ onMonthChange }) => {
+      onMonthChange(selectedMonth);
     });
 
-    const capitalize = (text: string): string =>
-      text.charAt(0).toUpperCase() + text.slice(1);
+    const { getByTestId } = render(<Dashboard />);
 
-    const nextMonth = addMonths(Date.now(), 1);
-    expect(container.querySelector('.DayPicker-Caption')).toBeInTheDocument();
-    expect(container.querySelector('.DayPicker-Caption')).toHaveTextContent(
-      capitalize(
-        format(nextMonth, 'MMMM yyyy', {
-          locale: ptBR,
-        }),
-      ),
-    );
+    await act(async () => {
+      fireEvent.click(getByTestId('calendar'));
+    });
+
+    expect(mockClick).toHaveBeenCalled();
   });
 
   it('should be able to see the next appointment', async () => {
@@ -279,9 +269,9 @@ describe('Dashboard page', () => {
     expect(getByTestId('next-appointment-date')).toHaveTextContent(
       format(Date.now(), "'Dia' dd 'de' MMMM", { locale: ptBR }),
     );
-    expect(
-      getByText(format(Date.now(), 'cccc', { locale: ptBR })),
-    ).toBeInTheDocument();
+    expect(getByTestId('next-appointment-day')).toHaveTextContent(
+      format(Date.now(), 'cccc', { locale: ptBR }),
+    );
     expect(getByTestId('next-appointment-image')).toBeInTheDocument();
     expect(getByTestId('next-appointment-image')).toHaveProperty(
       'src',
