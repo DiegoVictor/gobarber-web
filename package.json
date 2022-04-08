@@ -22,7 +22,7 @@
   "scripts": {
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
-    "test": "jest",
+    "test": "jest --runInBand",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
