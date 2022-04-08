@@ -6,13 +6,11 @@ import faker from '@faker-js/faker';
 import api from '../../src/services/api';
 import ResetPassword from '../../src/pages/ResetPassword';
 
-const mockedHistoryPush = jest.fn();
+const mockNavigate = jest.fn();
 let mockedLocation = jest.fn(() => ({ search: `?token=78df6g87f87989sfd` }));
 jest.mock('react-router-dom', () => {
   return {
-    useHistory: () => ({
-      push: mockedHistoryPush,
-    }),
+    useNavigate: () => mockNavigate,
     useLocation: jest.fn(() => {
       return mockedLocation();
     }),
@@ -33,7 +31,7 @@ describe('ResetPassword page', () => {
   const apiMock = new MockAdapter(api);
 
   beforeEach(() => {
-    mockedHistoryPush.mockClear();
+    mockNavigate.mockClear();
   });
 
   it('should be able to change password', async () => {
@@ -54,7 +52,7 @@ describe('ResetPassword page', () => {
       fireEvent.click(buttonElement);
     });
 
-    expect(mockedHistoryPush).toHaveBeenCalledWith('/');
+    expect(mockNavigate).toHaveBeenCalledWith('/');
   });
 
   it('should not be able to change password with invalid data', async () => {
@@ -69,7 +67,7 @@ describe('ResetPassword page', () => {
     });
 
     expect(getByText('Senha obrigatória')).toBeInTheDocument();
-    expect(mockedHistoryPush).not.toHaveBeenCalled();
+    expect(mockNavigate).not.toHaveBeenCalled();
   });
 
   it('should not be able to change password', async () => {
@@ -90,7 +88,7 @@ describe('ResetPassword page', () => {
       fireEvent.click(buttonElement);
     });
 
-    expect(mockedHistoryPush).not.toHaveBeenCalledWith('/');
+    expect(mockNavigate).not.toHaveBeenCalledWith('/');
     expect(mockedAddToast).toHaveBeenCalledWith({
       type: 'error',
       title: 'Erro ao resetar senha',
@@ -118,6 +116,6 @@ describe('ResetPassword page', () => {
       fireEvent.click(buttonElement);
     });
 
-    expect(mockedHistoryPush).not.toHaveBeenCalledWith('/');
+    expect(mockNavigate).not.toHaveBeenCalledWith('/');
   });
 });

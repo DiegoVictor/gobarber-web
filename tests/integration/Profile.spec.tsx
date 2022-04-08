@@ -12,12 +12,10 @@ interface User {
   email: string;
 }
 
-const mockedHistoryPush = jest.fn();
+const mockNavigate = jest.fn();
 jest.mock('react-router-dom', () => {
   return {
-    useHistory: () => ({
-      push: mockedHistoryPush,
-    }),
+    useNavigate: () => mockNavigate,
     Link: ({
       children,
       to,
@@ -60,7 +58,7 @@ describe('Profile page', () => {
   beforeEach(() => {
     mockedUpdateUser.mockClear();
     mockedAddToast.mockClear();
-    mockedHistoryPush.mockClear();
+    mockNavigate.mockClear();
   });
 
   it('should be able to update user data', async () => {
@@ -99,7 +97,7 @@ describe('Profile page', () => {
       title: 'Perfil atualizado!',
       description: 'Suas informações do perfil foram atualizadas com sucesso!',
     });
-    expect(mockedHistoryPush).toHaveBeenCalledWith('/dashboard');
+    expect(mockNavigate).toHaveBeenCalledWith('/dashboard');
   });
 
   it('should not be able to update user with invalid data', async () => {
@@ -121,7 +119,7 @@ describe('Profile page', () => {
 
     expect(mockedUpdateUser).not.toHaveBeenCalled();
     expect(mockedAddToast).not.toHaveBeenCalled();
-    expect(mockedHistoryPush).not.toHaveBeenCalled();
+    expect(mockNavigate).not.toHaveBeenCalled();
     expect(getByText('Confirmação incorreta')).toBeInTheDocument();
   });
 
@@ -144,7 +142,7 @@ describe('Profile page', () => {
     });
 
     expect(mockedUpdateUser).not.toHaveBeenCalled();
-    expect(mockedHistoryPush).not.toHaveBeenCalled();
+    expect(mockNavigate).not.toHaveBeenCalled();
     expect(mockedAddToast).toHaveBeenCalledWith({
       type: 'error',
       title: 'Erro na atualização',

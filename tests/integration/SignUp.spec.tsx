@@ -7,12 +7,10 @@ import SignUp from '../../src/pages/SignUp';
 import api from '../../src/services/api';
 import factory from '../utils/factory';
 
-const mockedHistoryPush = jest.fn();
+const mockNavigate = jest.fn();
 jest.mock('react-router-dom', () => {
   return {
-    useHistory: () => ({
-      push: mockedHistoryPush,
-    }),
+    useNavigate: () => mockNavigate,
     Link: ({ children }: { children: React.ReactNode }) => children,
   };
 });
@@ -30,7 +28,7 @@ describe('SignUp page', () => {
   const apiMock = new MockAdapter(api);
 
   beforeEach(() => {
-    mockedHistoryPush.mockClear();
+    mockNavigate.mockClear();
   });
 
   it('should be able to sign up', async () => {
@@ -71,7 +69,7 @@ describe('SignUp page', () => {
       fireEvent.click(buttonElement);
     });
 
-    expect(mockedHistoryPush).not.toHaveBeenCalled();
+    expect(mockNavigate).not.toHaveBeenCalled();
 
     expect(getByText('Nome obrigatório')).toBeInTheDocument();
     expect(getByText('Email obrigatório')).toBeInTheDocument();
@@ -100,7 +98,7 @@ describe('SignUp page', () => {
       fireEvent.click(buttonElement);
     });
 
-    expect(mockedHistoryPush).not.toHaveBeenCalled();
+    expect(mockNavigate).not.toHaveBeenCalled();
     expect(mockedAddToast).toHaveBeenCalledWith({
       type: 'error',
       title: 'Erro no cadastro',
