@@ -1,8 +1,8 @@
 import React, { useState, useCallback, useEffect, useMemo } from 'react';
-import DayPicker, { DayModifiers } from 'react-day-picker';
+import { DayPicker, DayModifiers } from 'react-day-picker';
 import { isToday, format, parseISO, isAfter } from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
-import 'react-day-picker/lib/style.css';
+import 'react-day-picker/dist/style.css';
 import { FiPower, FiClock } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 
@@ -200,7 +200,7 @@ const Dashboard: React.FC = () => {
             <span data-testid="next-appointment-date">
               {selectedDateAsText}
             </span>
-            <span>{selectedWeekDay}</span>
+            <span data-testid="next-appointment-day">{selectedWeekDay}</span>
           </p>
 
           {isToday(selectedDate) && nextAppointment && (
@@ -291,30 +291,16 @@ const Dashboard: React.FC = () => {
         </Schedule>
         <Calendar>
           <DayPicker
-            initialMonth={new Date(Date.now())}
-            weekdaysShort={['D', 'S', 'T', 'Q', 'Q', 'S', 'S']}
+            defaultMonth={new Date(Date.now())}
+            locale={ptBR}
             fromMonth={new Date(Date.now())}
-            disabledDays={[{ daysOfWeek: [0, 6] }, ...disabledDays]}
+            disabled={[{ dayOfWeek: [0, 6] }, ...disabledDays]}
             modifiers={{
-              available: { daysOfWeek: [1, 2, 3, 4, 5] },
+              available: { dayOfWeek: [1, 2, 3, 4, 5] },
             }}
             onMonthChange={handleMonthChange}
-            selectedDays={selectedDate}
+            selected={selectedDate}
             onDayClick={handleDateChange}
-            months={[
-              'Janeiro',
-              'Fevereiro',
-              'Março',
-              'Abril',
-              'Maio',
-              'Junho',
-              'Julho',
-              'Agosto',
-              'Setembro',
-              'Outubro',
-              'Novembro',
-              'Dezembro',
-            ]}
           />
         </Calendar>
       </Content>
