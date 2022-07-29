@@ -7,7 +7,7 @@
 [![airbnb-style](https://flat.badgen.net/badge/style-guide/airbnb/ff5a5f?icon=airbnb)](https://github.com/airbnb/javascript)
 [![jest](https://img.shields.io/badge/jest-24.9.0-brightgreen?style=flat-square&logo=jest)](https://jestjs.io/)
 [![coverage](https://img.shields.io/codecov/c/gh/DiegoVictor/gobarber-web?logo=codecov&style=flat-square)](https://codecov.io/gh/DiegoVictor/gobarber-web)
-[![MIT License](https://img.shields.io/badge/license-MIT-green?style=flat-square)](https://github.com/DiegoVictor/gobarber-web/blob/master/LICENSE)
+[![MIT License](https://img.shields.io/badge/license-MIT-green?style=flat-square)](https://github.com/DiegoVictor/gobarber-web/blob/main/LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)<br>
 This web version allow providers to register yourself, change or reset password, update name and email, update avatar and see your schedules. All the resources used by this application comes from its [`API`](https://github.com/DiegoVictor/gobarber-api).
 
@@ -24,12 +24,12 @@ This web version allow providers to register yourself, change or reset password,
 
 # Screenshots
 Click to expand.<br>
-<img src="https://raw.githubusercontent.com/DiegoVictor/gobarber-web/master/screenshots/login.png" width="49%"/>
-<img src="https://raw.githubusercontent.com/DiegoVictor/gobarber-web/master/screenshots/signup.png" width="49%"/>
-<img src="https://raw.githubusercontent.com/DiegoVictor/gobarber-web/master/screenshots/forgot.png" width="49%"/>
-<img src="https://raw.githubusercontent.com/DiegoVictor/gobarber-web/master/screenshots/reset.png" width="49%"/>
-<img src="https://raw.githubusercontent.com/DiegoVictor/gobarber-web/master/screenshots/dashboard.png" width="49%"/>
-<img src="https://raw.githubusercontent.com/DiegoVictor/gobarber-web/master/screenshots/profile.png" width="49%"/>
+<img src="https://raw.githubusercontent.com/DiegoVictor/gobarber-web/main/screenshots/login.png" width="49%"/>
+<img src="https://raw.githubusercontent.com/DiegoVictor/gobarber-web/main/screenshots/signup.png" width="49%"/>
+<img src="https://raw.githubusercontent.com/DiegoVictor/gobarber-web/main/screenshots/forgot.png" width="49%"/>
+<img src="https://raw.githubusercontent.com/DiegoVictor/gobarber-web/main/screenshots/reset.png" width="49%"/>
+<img src="https://raw.githubusercontent.com/DiegoVictor/gobarber-web/main/screenshots/dashboard.png" width="49%"/>
+<img src="https://raw.githubusercontent.com/DiegoVictor/gobarber-web/main/screenshots/profile.png" width="49%"/>
 
 # Installing
 Easy peasy lemon squeezy:
