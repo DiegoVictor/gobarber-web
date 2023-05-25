@@ -2,9 +2,7 @@ version: 1.0.{build}
 image: Ubuntu
 environment:
   REACT_APP_API_URL: http://localhost:3333
-  NODEJS_VERSION: 16.3.0
 install:
-  - sh: nvm install $NODEJS_VERSION
   - sh: npm ci
 build: off
 test_script:
