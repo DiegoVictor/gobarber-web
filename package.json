@@ -19,9 +19,12 @@
     "uuid": "^9.0.0",
     "yup": "^1.1.1"
   },
+  "overrides": {
+    "typescript": "^5.0.4"
+  },
   "scripts": {
-    "start": "react-app-rewired start",
-    "build": "react-app-rewired build",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
     "test": "jest --runInBand",
     "eject": "react-scripts eject"
   },
