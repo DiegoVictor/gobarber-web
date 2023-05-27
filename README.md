@@ -1,5 +1,5 @@
 # [Web] GoBaber
-[![Travis](https://img.shields.io/travis/com/DiegoVictor/gobarber-web?logo=travis&style=flat-square)](https://app.travis-ci.com/github/DiegoVictor/gobarber-web)
+[![AppVeyor](https://img.shields.io/appveyor/build/diegovictor/gobarber-web?logo=appveyor&style=flat-square)](https://ci.appveyor.com/project/DiegoVictor/gobarber-web)
 [![typescript](https://img.shields.io/badge/typescript-4.2.4-3178c6?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
 [![react](https://img.shields.io/badge/reactjs-16.14.0-61dafb?style=flat-square&logo=react)](https://reactjs.org/)
 [![styled-components](https://img.shields.io/badge/styled_components-5.2.1-db7b86?style=flat-square&logo=styled-components)](https://styled-components.com/)
