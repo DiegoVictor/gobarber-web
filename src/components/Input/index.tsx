@@ -7,13 +7,13 @@ import React, {
 } from 'react';
 import { useField } from '@unform/core';
 import { FiAlertCircle } from 'react-icons/fi';
-import { IconBaseProps } from 'react-icons/lib';
+import { IconType } from 'react-icons/lib';
 
 import { Container, Error } from './styles';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
-  icon?: React.ComponentType<IconBaseProps>;
+  icon?: IconType;
   containerStyle?: { [key: string]: string | number | undefined | boolean };
 }
 
