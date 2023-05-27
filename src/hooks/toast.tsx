@@ -4,6 +4,7 @@ import React, {
   useCallback,
   useState,
   useMemo,
+  PropsWithChildren,
 } from 'react';
 import { v4 } from 'uuid';
 
@@ -24,7 +25,7 @@ interface ToastContextData {
 
 const ToastContext = createContext<ToastContextData>({} as ToastContextData);
 
-export const ToastProvider: React.FC = ({ children }) => {
+export const ToastProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [messages, setMessages] = useState<ToastMessage[]>([]);
 
   const addToast = useCallback(

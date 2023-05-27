@@ -40,13 +40,13 @@ const Profile: React.FC = () => {
             .required('Email obrigatório'),
           old_password: Yup.string(),
           password: Yup.string().when('old_password', {
-            is: (val: any) => !!val.length,
-            then: Yup.string().required('Campo obrigatório'),
+            is: (val: string) => !!val.length,
+            then: () => Yup.string().required('Campo obrigatório'),
           }),
           password_confirmation: Yup.string()
             .when('old_password', {
-              is: (val: any) => !!val.length,
-              then: Yup.string().required('Campo obrigatório'),
+              is: (val: string) => !!val.length,
+              then: () => Yup.string().required('Campo obrigatório'),
             })
             .oneOf([Yup.ref('password')], 'Confirmação incorreta'),
         });

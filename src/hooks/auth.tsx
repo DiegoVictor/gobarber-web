@@ -4,6 +4,7 @@ import React, {
   useState,
   useContext,
   useMemo,
+  PropsWithChildren,
 } from 'react';
 
 import api from '../services/api';
@@ -34,7 +35,7 @@ export interface AuthContextData {
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
-export const AuthProvider: React.FC = ({ children }) => {
+export const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
   const [data, setData] = useState<AuthState>(() => {
     const token = localStorage.getItem('@GoBarber:token');
     const user = localStorage.getItem('@GoBarber:user');
@@ -57,7 +58,7 @@ export const AuthProvider: React.FC = ({ children }) => {
     setData({} as AuthState);
   }, []);
 
-  const signIn = useCallback(async ({ email, password }) => {
+  const signIn = useCallback(async ({ email, password }: Credentials) => {
     const response = await api.post('sessions', { email, password });
     const { token, user } = response.data;
 
