@@ -17,9 +17,13 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react"
+    "jsx": "react",
+    "strictNullChecks": true,
+    "strictFunctionTypes": false
   },
   "include": [
-    "src", "tests"
+    "src",
+    "tests",
+    "tests/jest-setup.ts"
   ]
 }
