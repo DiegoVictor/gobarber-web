@@ -1,9 +1,9 @@
 import React from 'react';
 import { act, fireEvent, render, waitFor } from '@testing-library/react';
 import MockAdapter from 'axios-mock-adapter';
-import faker from '@faker-js/faker';
+import { faker } from '@faker-js/faker';
 import ptBR from 'date-fns/locale/pt-BR';
-import { addMonths, format, setHours } from 'date-fns';
+import { format, setHours } from 'date-fns';
 
 import Dashboard from '../../src/pages/Dashboard';
 import api from '../../src/services/api';
@@ -38,7 +38,7 @@ jest.mock('react-router-dom', () => {
   };
 });
 
-const user_id = faker.datatype.uuid();
+const user_id = faker.string.uuid();
 
 const mockedSignOut = jest.fn();
 const mockedUseAuth = (): {

@@ -6,6 +6,11 @@ import ForgotPassword from '../../src/pages/ForgotPassword';
 import api from '../../src/services/api';
 import factory from '../utils/factory';
 
+interface User {
+  name: string;
+  email: string;
+}
+
 const mockedHistoryPush = jest.fn();
 jest.mock('react-router-dom', () => {
   return {
@@ -44,7 +49,7 @@ describe('ForgotPassword page', () => {
   });
 
   it('should be able to start forgot password process', async () => {
-    const { email } = await factory.attrs('User');
+    const { email } = await factory.attrs<User>('User');
 
     apiMock.onPost('/password/forgot').reply(200);
     const { getByTestId, getByPlaceholderText } = render(<ForgotPassword />);
@@ -84,7 +89,7 @@ describe('ForgotPassword page', () => {
   });
 
   it('should not be able to start forgot password process with network error', async () => {
-    const { email } = await factory.attrs('User');
+    const { email } = await factory.attrs<User>('User');
 
     apiMock.onPost('/password/forgot').reply(404);
     const { getByTestId, getByPlaceholderText } = render(<ForgotPassword />);

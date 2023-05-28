@@ -1,7 +1,7 @@
 import React from 'react';
 import { act, fireEvent, render } from '@testing-library/react';
 import MockAdapter from 'axios-mock-adapter';
-import faker from '@faker-js/faker';
+import { faker } from '@faker-js/faker';
 
 import api from '../../src/services/api';
 import ResetPassword from '../../src/pages/ResetPassword';
@@ -35,7 +35,7 @@ describe('ResetPassword page', () => {
   });
 
   it('should be able to change password', async () => {
-    const password = faker.random.alphaNumeric(15);
+    const password = faker.string.alphanumeric(15);
 
     apiMock.onPost('/password/reset').reply(200);
 
@@ -71,7 +71,7 @@ describe('ResetPassword page', () => {
   });
 
   it('should not be able to change password', async () => {
-    const password = faker.random.alphaNumeric(15);
+    const password = faker.string.alphanumeric(15);
 
     apiMock.onPost('/password/reset').reply(400);
 
@@ -97,7 +97,7 @@ describe('ResetPassword page', () => {
   });
 
   it('should not be able to change password without token', async () => {
-    const password = faker.random.alphaNumeric(15);
+    const password = faker.string.alphanumeric(15);
 
     apiMock.onPost('/password/reset').reply(200);
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { act, fireEvent, render } from '@testing-library/react';
 import MockAdapter from 'axios-mock-adapter';
-import faker from '@faker-js/faker';
+import { faker } from '@faker-js/faker';
 
 import Profile from '../../src/pages/Profile';
 import api from '../../src/services/api';
@@ -63,8 +63,8 @@ describe('Profile page', () => {
 
   it('should be able to update user data', async () => {
     const user = await factory.attrs<User>('User');
-    const password = faker.random.alphaNumeric(15);
-    const newPassword = faker.random.alphaNumeric(15);
+    const password = faker.string.alphanumeric(15);
+    const newPassword = faker.string.alphanumeric(15);
 
     apiMock.onPut('/profile').reply(200, user);
 
@@ -101,7 +101,7 @@ describe('Profile page', () => {
   });
 
   it('should not be able to update user with invalid data', async () => {
-    const password = faker.random.alphaNumeric(15);
+    const password = faker.string.alphanumeric(15);
     const { getByTestId, getByPlaceholderText, getByText } = render(
       <Profile />,
     );
@@ -120,11 +120,11 @@ describe('Profile page', () => {
     expect(mockedUpdateUser).not.toHaveBeenCalled();
     expect(mockedAddToast).not.toHaveBeenCalled();
     expect(mockNavigate).not.toHaveBeenCalled();
-    expect(getByText('Confirmação incorreta')).toBeInTheDocument();
+    expect(getByText('Campo obrigatório')).toBeInTheDocument();
   });
 
   it('should not be able to update user data with network error', async () => {
-    const { name, email } = await factory.attrs('User');
+    const { name, email } = await factory.attrs<User>('User');
 
     apiMock.onPut('/profile').reply(404);
 
@@ -151,7 +151,7 @@ describe('Profile page', () => {
   });
 
   it('should be able to update user avatar', async () => {
-    const avatar_url = faker.image.imageUrl();
+    const avatar_url = faker.image.url();
     apiMock.onPatch('/users/avatar').reply(200, { avatar_url });
 
     const { getByTestId } = render(<Profile />);

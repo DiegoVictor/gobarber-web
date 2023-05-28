@@ -1,10 +1,15 @@
 import React from 'react';
 import { render, fireEvent, act } from '@testing-library/react';
-import faker from '@faker-js/faker';
+import { faker } from '@faker-js/faker';
 
 import * as Auth from '../../src/hooks/auth';
 import SignIn from '../../src/pages/SignIn';
 import factory from '../utils/factory';
+
+interface User {
+  name: string;
+  email: string;
+}
 
 const mockedHistoryPush = jest.fn();
 jest.mock('react-router-dom', () => {
@@ -39,8 +44,8 @@ describe('SignIn page', () => {
       updateUser: jest.fn(),
     }));
 
-    const { email } = await factory.attrs('User');
-    const password = faker.random.alphaNumeric(15);
+    const { email } = await factory.attrs<User>('User');
+    const password = faker.string.alphanumeric(15);
 
     const { getByPlaceholderText, getByText } = render(<SignIn />);
 
@@ -72,7 +77,7 @@ describe('SignIn page', () => {
 
     fireEvent.change(emailField, { target: { value: 'not-valid-email' } });
     fireEvent.change(passwordField, {
-      target: { value: faker.random.alphaNumeric(15) },
+      target: { value: faker.string.alphanumeric(15) },
     });
 
     await act(async () => {
@@ -83,7 +88,7 @@ describe('SignIn page', () => {
   });
 
   it('should display an error if login fails', async () => {
-    const { email } = await factory.attrs('User');
+    const { email } = await factory.attrs<User>('User');
     const signIn = jest.fn(() => {
       throw new Error();
     });
@@ -102,7 +107,7 @@ describe('SignIn page', () => {
 
     fireEvent.change(emailField, { target: { value: email } });
     fireEvent.change(passwordField, {
-      target: { value: faker.random.alphaNumeric(15) },
+      target: { value: faker.string.alphanumeric(15) },
     });
 
     await act(async () => {

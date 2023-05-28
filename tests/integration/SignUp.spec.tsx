@@ -1,11 +1,16 @@
 import React from 'react';
 import { render, fireEvent, act } from '@testing-library/react';
 import MockAdapter from 'axios-mock-adapter';
-import faker from '@faker-js/faker';
+import { faker } from '@faker-js/faker';
 
 import SignUp from '../../src/pages/SignUp';
 import api from '../../src/services/api';
 import factory from '../utils/factory';
+
+interface User {
+  name: string;
+  email: string;
+}
 
 const mockNavigate = jest.fn();
 jest.mock('react-router-dom', () => {
@@ -32,7 +37,7 @@ describe('SignUp page', () => {
   });
 
   it('should be able to sign up', async () => {
-    const { name, email } = await factory.attrs('User');
+    const { name, email } = await factory.attrs<User>('User');
 
     apiMock.onPost('users').reply(200);
 
@@ -46,7 +51,7 @@ describe('SignUp page', () => {
     fireEvent.change(nameField, { target: { value: name } });
     fireEvent.change(emailField, { target: { value: email } });
     fireEvent.change(passwordField, {
-      target: { value: faker.random.alphaNumeric(15) },
+      target: { value: faker.string.alphanumeric(15) },
     });
 
     await act(async () => {
@@ -77,7 +82,7 @@ describe('SignUp page', () => {
   });
 
   it('should not be able to sign up', async () => {
-    const { name, email } = await factory.attrs('User');
+    const { name, email } = await factory.attrs<User>('User');
 
     apiMock.onPost('users').reply(400);
 
@@ -91,7 +96,7 @@ describe('SignUp page', () => {
     fireEvent.change(nameField, { target: { value: name } });
     fireEvent.change(emailField, { target: { value: email } });
     fireEvent.change(passwordField, {
-      target: { value: faker.random.alphaNumeric(15) },
+      target: { value: faker.string.alphanumeric(15) },
     });
 
     await act(async () => {
