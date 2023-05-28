@@ -1,6 +1,6 @@
-import { renderHook, act } from '@testing-library/react-hooks';
+import { renderHook, act } from '@testing-library/react';
 import MockAdapter from 'axios-mock-adapter';
-import faker from '@faker-js/faker';
+import { faker } from '@faker-js/faker';
 
 import { useAuth, AuthProvider, User } from '../../../src/hooks/auth';
 import api from '../../../src/services/api';
@@ -11,7 +11,7 @@ describe('Auth hook', () => {
 
   it('should be able to sign in', async () => {
     const user = await factory.attrs<User>('User');
-    const token = faker.random.alphaNumeric(10);
+    const token = faker.string.alphanumeric(10);
 
     const response = {
       user,
@@ -21,16 +21,16 @@ describe('Auth hook', () => {
 
     const setItemSpy = jest.spyOn(Storage.prototype, 'setItem');
 
-    const { result, waitForNextUpdate } = renderHook(() => useAuth(), {
+    const { result } = renderHook(() => useAuth(), {
       wrapper: AuthProvider,
     });
 
-    result.current.signIn({
-      email: user.email,
-      password: '123456',
+    await act(async () => {
+      result.current.signIn({
+        email: user.email,
+        password: '123456',
+      });
     });
-
-    await waitForNextUpdate();
 
     expect(setItemSpy).toHaveBeenCalledWith('@GoBarber:token', token);
     expect(setItemSpy).toHaveBeenCalledWith(
@@ -42,7 +42,7 @@ describe('Auth hook', () => {
 
   it('should restore saved data from storage when auth inits', async () => {
     const user = await factory.attrs<User>('User');
-    const token = faker.random.alphaNumeric(10);
+    const token = faker.string.alphanumeric(10);
     jest.spyOn(Storage.prototype, 'getItem').mockImplementation(key => {
       switch (key) {
         case '@GoBarber:token':
@@ -66,7 +66,7 @@ describe('Auth hook', () => {
   it('should be able to sign out', async () => {
     const user = await factory.attrs('User');
     const removeItemSpy = jest.spyOn(Storage.prototype, 'removeItem');
-    const token = faker.random.alphaNumeric(10);
+    const token = faker.string.alphanumeric(10);
 
     jest.spyOn(Storage.prototype, 'getItem').mockImplementation(key => {
       switch (key) {
