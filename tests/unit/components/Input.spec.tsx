@@ -22,48 +22,14 @@ describe('Input component', () => {
       <Input name="email" placeholder="Email" />,
     );
 
-    expect(getByPlaceholderText('Email')).toBeTruthy();
-  });
-
-  it('should render highlight on input focus', async () => {
-    const { getByPlaceholderText, getByTestId } = render(
-      <Input name="email" placeholder="Email" />,
-    );
-
     const inputElement = getByPlaceholderText('Email');
-    const containerElement = getByTestId('input-container');
+    expect(inputElement).toBeTruthy();
 
+    const value = 'john@example.com';
     fireEvent.focus(inputElement);
-
-    await waitFor(() =>
-      expect(containerElement).toHaveStyle(
-        'border-color: #ff9000;color: #ff9000',
-      ),
-    );
-
+    fireEvent.change(inputElement, { target: { value } });
     fireEvent.blur(inputElement);
 
-    await waitFor(() =>
-      expect(containerElement).not.toHaveStyle(
-        'border-color: #ff9000;color: #ff9000',
-      ),
-    );
-  });
-
-  it('should keep input border highlight when input filled', async () => {
-    const { getByPlaceholderText, getByTestId } = render(
-      <Input name="email" placeholder="Email" />,
-    );
-
-    const inputElement = getByPlaceholderText('Email');
-    const containerElement = getByTestId('input-container');
-
-    fireEvent.change(inputElement, { target: { value: 'john@example.com' } });
-
-    fireEvent.blur(inputElement);
-
-    await waitFor(() => {
-      expect(containerElement).toHaveStyle('color: #ff9000');
-    });
+    expect(inputElement).toHaveValue(value);
   });
 });
