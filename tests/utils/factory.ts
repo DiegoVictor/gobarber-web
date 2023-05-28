@@ -1,12 +1,12 @@
 import factory from 'factory-girl';
-import faker from '@faker-js/faker';
+import { faker } from '@faker-js/faker';
 
 factory.define(
   'Toast',
   {},
   {
-    id: () => String(faker.datatype.number()),
-    title: faker.name.jobTitle,
+    id: () => String(faker.string.uuid()),
+    title: faker.word.words,
     description: faker.lorem.paragraph,
   },
 );
@@ -15,10 +15,10 @@ factory.define(
   'User',
   {},
   {
-    id: () => String(faker.datatype.number()),
-    name: faker.name.findName,
+    id: () => String(faker.string.uuid()),
+    name: faker.person.fullName,
     email: faker.internet.email,
-    avatar_url: faker.image.imageUrl,
+    avatar_url: faker.image.url,
   },
 );
 
@@ -26,11 +26,11 @@ factory.define(
   'Appointment',
   {},
   {
-    id: () => String(faker.datatype.number()),
+    id: () => String(faker.string.uuid()),
     date: faker.date.future,
     user: {
-      name: faker.name.findName,
-      avatar_url: faker.image.imageUrl,
+      name: faker.person.fullName,
+      avatar_url: faker.image.url,
     },
   },
 );
