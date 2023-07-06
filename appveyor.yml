@@ -4,10 +4,10 @@ environment:
   NODEJS_VERSION: 18.16.1
 install:
   - ps: Install-Product node $env:NODEJS_VERSION
-  - sh: npm ci
+  - ps: npm ci
 build: off
 test_script:
-  - sh: npm run test
+  - ps: npm run test
 on_success:
   - sh: |
       curl -Os https://uploader.codecov.io/latest/linux/codecov
