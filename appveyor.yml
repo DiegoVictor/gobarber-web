@@ -1,13 +1,12 @@
 version: 1.0.{build}
+image: Ubuntu
 environment:
   REACT_APP_API_URL: http://localhost:3333
-  NODEJS_VERSION: 18.16.1
 install:
-  - ps: Install-Product node $env:NODEJS_VERSION
-  - ps: npm ci
+  - sh: npm ci
 build: off
 test_script:
-  - ps: npm run test
+  - sh: npm run test
 on_success:
   - sh: |
       curl -Os https://uploader.codecov.io/latest/linux/codecov
