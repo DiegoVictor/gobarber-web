@@ -1,5 +1,5 @@
 version: 1.0.{build}
-image: Ubuntu
+image: Ubuntu2204
 environment:
   REACT_APP_API_URL: http://localhost:3333
 install:
