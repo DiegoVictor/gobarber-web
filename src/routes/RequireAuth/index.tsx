@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 
 import { useAuth } from '../../hooks/auth';
 
-const RequireAuth: React.FC<{ children: JSX.Element }> = ({ children }) => {
+const RequireAuth: React.FC<PropsWithChildren> = ({ children }) => {
   const { user } = useAuth();
   const location = useLocation();
 
