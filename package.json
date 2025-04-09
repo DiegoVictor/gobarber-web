@@ -3,8 +3,6 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "@unform/core": "^2.1.0",
-    "@unform/web": "^2.1.0",
     "axios": "^1.4.0",
     "date-fns": "^2.28.0",
     "polished": "^4.2.1",
