@@ -1,8 +1,6 @@
 import React, { useCallback, useRef, ChangeEvent } from 'react';
 import { FiMail, FiLock, FiUser, FiCamera, FiArrowLeft } from 'react-icons/fi';
-import { Form } from '@unform/web';
 import * as Yup from 'yup';
-import { FormHandles } from '@unform/core';
 import { Link, useNavigate } from 'react-router-dom';
 
 import Input from '../../components/Input';
@@ -121,14 +119,7 @@ const Profile: React.FC = () => {
         </div>
       </header>
       <Content>
-        <Form
-          initialData={{
-            name: user.name,
-            email: user.email,
-          }}
-          ref={formRef}
-          onSubmit={handleSubmit}
-        >
+        <form onSubmit={handleSubmit}>
           <AvatarInput>
             <img src={user.avatar_url} alt={user.name} />
             <label htmlFor="avatar">
@@ -169,7 +160,7 @@ const Profile: React.FC = () => {
           <Button type="submit" data-testid="submit">
             Confirmar mudanças
           </Button>
-        </Form>
+        </form>
       </Content>
     </Container>
   );

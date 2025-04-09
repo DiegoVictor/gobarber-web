@@ -1,8 +1,6 @@
 import React, { useCallback, useRef } from 'react';
 import { FiArrowLeft, FiMail, FiLock, FiUser } from 'react-icons/fi';
-import { Form } from '@unform/web';
 import * as Yup from 'yup';
-import { FormHandles } from '@unform/core';
 import { Link, useNavigate } from 'react-router-dom';
 
 import Logo from '../../assets/logo.svg';
@@ -70,7 +68,7 @@ const SignUp: React.FC = () => {
         <AnimationContainer>
           <img src={Logo} alt="GoBarber" />
 
-          <Form ref={formRef} onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit}>
             <h1>Faça seu cadastro</h1>
 
             <Input icon={FiUser} name="name" type="text" placeholder="Nome" />
@@ -83,7 +81,7 @@ const SignUp: React.FC = () => {
             />
 
             <Button type="submit">Cadastrar</Button>
-          </Form>
+          </form>
 
           <Link to="/">
             <FiArrowLeft />

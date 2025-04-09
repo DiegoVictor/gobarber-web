@@ -1,7 +1,5 @@
 import React, { useRef, useCallback } from 'react';
 import { FiLock } from 'react-icons/fi';
-import { Form } from '@unform/web';
-import { FormHandles } from '@unform/core';
 import * as Yup from 'yup';
 import { useLocation, useNavigate } from 'react-router-dom';
 
@@ -77,7 +75,7 @@ const ResetPassword: React.FC = () => {
         <AnimationContainer>
           <img src={Logo} alt="GoBarber" />
 
-          <Form ref={formRef} onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit}>
             <h1>Resetar senha</h1>
 
             <Input
@@ -94,7 +92,7 @@ const ResetPassword: React.FC = () => {
             />
 
             <Button type="submit">Alterar senha</Button>
-          </Form>
+          </form>
         </AnimationContainer>
       </Content>
       <Background />
