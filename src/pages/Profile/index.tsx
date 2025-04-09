@@ -134,8 +134,22 @@ const Profile: React.FC = () => {
           </AvatarInput>
 
           <h1>Meu perfil</h1>
-          <Input icon={FiUser} name="name" type="text" placeholder="Nome" />
-          <Input icon={FiMail} name="email" type="text" placeholder="Email" />
+          <Input
+            icon={FiUser}
+            name="name"
+            type="text"
+            placeholder="Nome"
+            error={errors.name}
+            defaultValue={user.name}
+          />
+          <Input
+            icon={FiMail}
+            name="email"
+            type="text"
+            placeholder="Email"
+            error={errors.email}
+            defaultValue={user.email}
+          />
 
           <Input
             containerStyle={{ marginTop: 24 }}
@@ -143,18 +157,21 @@ const Profile: React.FC = () => {
             name="old_password"
             type="password"
             placeholder="Senha atual"
+            error={errors.old_password}
           />
           <Input
             icon={FiLock}
             name="password"
             type="password"
             placeholder="Nova senha"
+            error={errors.password}
           />
           <Input
             icon={FiLock}
             name="password_confirmation"
             type="password"
             placeholder="Confirmar senha"
+            error={errors.password_confirmation}
           />
 
           <Button type="submit" data-testid="submit">

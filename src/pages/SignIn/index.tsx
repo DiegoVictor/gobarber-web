@@ -65,12 +65,19 @@ const SignIn: React.FC = () => {
           <form onSubmit={handleSubmit}>
             <h1>Faça seu login</h1>
 
-            <Input icon={FiMail} name="email" type="text" placeholder="Email" />
+            <Input
+              icon={FiMail}
+              name="email"
+              type="text"
+              placeholder="Email"
+              error={errors.email}
+            />
             <Input
               icon={FiLock}
               name="password"
               type="password"
               placeholder="Senha"
+              error={errors.password}
             />
 
             <Button type="submit">Entrar</Button>
