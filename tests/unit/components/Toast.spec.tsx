@@ -20,6 +20,27 @@ describe('Toast component', () => {
     mockedRemoveToast.mockClear();
   });
 
+  it('should be able to render toast without description', async () => {
+    const message = await factory.attrs<Required<ToastMessage>>('Toast', {
+      description: undefined,
+    });
+    const { getByText, getByTestId } = render(
+      <Toast
+        message={message}
+        style={{
+          right: new SpringValue(),
+          opacity: new SpringValue(),
+        }}
+      />,
+    );
+
+    expect(getByText(message.title)).toBeInTheDocument();
+
+    fireEvent.click(getByTestId('remove'));
+
+    expect(mockedRemoveToast).toHaveBeenCalledWith(message.id);
+  });
+
   it('should be able to remove the toast', async () => {
     const message = await factory.attrs<Required<ToastMessage>>('Toast');
     const { getByText, getByTestId } = render(
