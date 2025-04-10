@@ -1,20 +1,7 @@
 import React from 'react';
-import { render, fireEvent, waitFor } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 
 import Input from '../../../src/components/Input';
-
-jest.mock('@unform/core', () => {
-  return {
-    useField() {
-      return {
-        fieldName: 'email',
-        defaultValue: '',
-        error: '',
-        registerField: jest.fn(),
-      };
-    },
-  };
-});
 
 describe('Input component', () => {
   it('should be able to render an input', () => {
