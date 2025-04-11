@@ -11,9 +11,11 @@ import { useToast } from '../../hooks/toast';
 import api from '../../services/api';
 import { Container, Content, AnimationContainer, Background } from './styles';
 
-interface ForgotPasswordFormData {
-  email: string;
-}
+const schema = Yup.object().shape({
+  email: Yup.string()
+    .email('Digite um email válido')
+    .required('Email obrigatório'),
+});
 
 const ForgotPassword: React.FC = () => {
   const [loading, setLoading] = useState(false);
@@ -25,12 +27,7 @@ const ForgotPassword: React.FC = () => {
       try {
         setLoading(true);
         formRef.current?.setErrors({});
-
-        const schema = Yup.object().shape({
-          email: Yup.string()
-            .email('Digite um email válido')
-            .required('Email obrigatório'),
-        });
+      const { email } = Object.fromEntries(formData.entries());
 
         await schema.validate(data, { abortEarly: false });
 
