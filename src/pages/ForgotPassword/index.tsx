@@ -30,8 +30,32 @@ const ForgotPassword: React.FC = () => {
 
     try {
       setLoading(true);
+
+      const formData = new FormData(event.currentTarget);
       const { email } = Object.fromEntries(formData.entries());
 
+      await schema.validate({ email }, { abortEarly: false });
+      await api.post('/password/forgot', {
+        email,
+      });
+
+      addToast({
+        type: 'success',
+        title: 'Email de recuperação enviado!',
+        description:
+          'Enviamos um email para confirmar a recuperação de senha, verifique sua caixa de entrada.',
+      });
+    } catch (err) {
+      if (err instanceof Yup.ValidationError) {
+        setErrors(getValidationErrors(err));
+      } else {
+        addToast({
+          type: 'error',
+          title: 'Erro na recuperação de senha',
+          description:
+            'Ocorreu um erro ao tentar realizar a recuperação de senha.',
+        });
+      }
     } finally {
       setLoading(false);
     }
