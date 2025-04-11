@@ -1,4 +1,4 @@
-import React, { useRef, useCallback, useState } from 'react';
+import React, { useState, FormEvent } from 'react';
 import { FiLogIn, FiMail } from 'react-icons/fi';
 import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
@@ -19,45 +19,23 @@ const schema = Yup.object().shape({
 
 const ForgotPassword: React.FC = () => {
   const [loading, setLoading] = useState(false);
-  const formRef = useRef<FormHandles>(null);
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const { addToast } = useToast();
 
-  const handleSubmit = useCallback(
-    async (data: ForgotPasswordFormData) => {
-      try {
-        setLoading(true);
-        formRef.current?.setErrors({});
+  const handleSubmit = async (
+    event: FormEvent<HTMLFormElement>,
+  ): Promise<void> => {
+    event.preventDefault();
+    setErrors({});
+
+    try {
+      setLoading(true);
       const { email } = Object.fromEntries(formData.entries());
 
-        await schema.validate(data, { abortEarly: false });
-
-        await api.post('/password/forgot', {
-          email: data.email,
-        });
-        addToast({
-          type: 'success',
-          title: 'Email de recuperação enviado!',
-          description:
-            'Enviamos um email para confirmar a recuperação de senha, verifique sua caixa de entrada.',
-        });
-      } catch (err) {
-        if (err instanceof Yup.ValidationError) {
-          const errors = getValidationErrors(err);
-          formRef.current?.setErrors(errors);
-        } else {
-          addToast({
-            type: 'error',
-            title: 'Erro na recuperação de senha',
-            description:
-              'Ocorreu um erro ao tentar realizar a recuperação de senha.',
-          });
-        }
-      } finally {
-        setLoading(false);
-      }
-    },
-    [addToast],
-  );
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <Container>
