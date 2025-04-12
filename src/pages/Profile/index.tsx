@@ -92,10 +92,10 @@ const Profile: React.FC = () => {
   );
 
   const handleAvatarChange = useCallback(
-    async (e: ChangeEvent<HTMLInputElement>) => {
-      if (e.target.files) {
+    async (event: ChangeEvent<HTMLInputElement>) => {
+      if (event.target.files) {
         const data = new FormData();
-        data.append('avatar', e.target.files[0]);
+        data.append('avatar', event.target.files[0]);
 
         const response = await api.patch('/users/avatar', data);
         updateUser(response.data);
