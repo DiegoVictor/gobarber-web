@@ -1,4 +1,4 @@
-import React, { useRef, useCallback } from 'react';
+import React, { FormEvent, useState } from 'react';
 import { FiLogIn, FiMail, FiLock } from 'react-icons/fi';
 import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
@@ -11,50 +11,46 @@ import getValidationErrors from '../../utils/getValidationErrors';
 import { useToast } from '../../hooks/toast';
 import { Container, Content, AnimationContainer, Background } from './styles';
 
-interface SignInFormData {
-  email: string;
-  password: string;
-}
+const schema = Yup.object().shape({
+  email: Yup.string()
+    .email('Digite um email válido')
+    .required('Email obrigatório'),
+  password: Yup.string().required('Senha obrigatória'),
+});
 
 const SignIn: React.FC = () => {
-  const formRef = useRef<FormHandles>(null);
   const { signIn } = useAuth();
   const { addToast } = useToast();
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
-  const handleSubmit = useCallback(
-    async (data: SignInFormData) => {
-      try {
-        formRef.current?.setErrors({});
+  const handleSubmit = async (
+    event: FormEvent<HTMLFormElement>,
+  ): Promise<void> => {
+    event.preventDefault();
+    setErrors({});
 
-        const schema = Yup.object().shape({
-          email: Yup.string()
-            .email('Digite um email válido')
-            .required('Email obrigatório'),
-          password: Yup.string().required('Senha obrigatória'),
+    try {
+      const formData = new FormData(event.currentTarget);
+      const { email, password } = Object.fromEntries(formData.entries());
+
+      await schema.validate({ email, password }, { abortEarly: false });
+
+      await signIn({
+        email: email.toString(),
+        password: password.toString(),
+      });
+    } catch (err) {
+      if (err instanceof Yup.ValidationError) {
+        setErrors(getValidationErrors(err));
+      } else {
+        addToast({
+          type: 'error',
+          title: 'Erro na autenticação',
+          description: 'Ocorreu um erro ao fazer login, cheque as credenciais.',
         });
-
-        await schema.validate(data, { abortEarly: false });
-
-        await signIn({
-          email: data.email,
-          password: data.password,
-        });
-      } catch (err) {
-        if (err instanceof Yup.ValidationError) {
-          const errors = getValidationErrors(err);
-          formRef.current?.setErrors(errors);
-        } else {
-          addToast({
-            type: 'error',
-            title: 'Erro na autenticação',
-            description:
-              'Ocorreu um erro ao fazer login, cheque as credenciais.',
-          });
-        }
       }
-    },
-    [signIn, addToast],
-  );
+    }
+  };
 
   return (
     <Container>
