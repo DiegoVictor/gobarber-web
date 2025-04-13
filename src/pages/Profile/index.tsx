@@ -31,23 +31,28 @@ const Profile: React.FC = () => {
       try {
         formRef.current?.setErrors({});
 
-        const schema = Yup.object().shape({
-          name: Yup.string().required('Nome obrigatório'),
-          email: Yup.string()
-            .email('Digite um email válido')
-            .required('Email obrigatório'),
-          old_password: Yup.string(),
-          password: Yup.string().when('old_password', {
-            is: (val: string) => !!val.length,
-            then: () => Yup.string().required('Campo obrigatório'),
-          }),
-          password_confirmation: Yup.string()
-            .when('old_password', {
-              is: (val: string) => !!val.length,
-              then: () => Yup.string().required('Campo obrigatório'),
-            })
-            .oneOf([Yup.ref('password')], 'Confirmação incorreta'),
-        });
+const schema = Yup.object().shape({
+  name: Yup.string().required('Nome obrigatório'),
+  email: Yup.string()
+    .email('Digite um email válido')
+    .required('Email obrigatório'),
+  old_password: Yup.string(),
+  password: Yup.string().when('old_password', {
+    is: (val: string) => !!val.length,
+    then: () => Yup.string().required('Campo obrigatório'),
+  }),
+  password_confirmation: Yup.string()
+    .when('old_password', {
+      is: (val: string) => !!val.length,
+      then: () => Yup.string().required('Campo obrigatório'),
+    })
+    .oneOf([Yup.ref('password')], 'Confirmação incorreta'),
+});
+
+const Profile: React.FC = () => {
+  const { addToast } = useToast();
+  const navigate = useNavigate();
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
         await schema.validate(data, { abortEarly: false });
 
