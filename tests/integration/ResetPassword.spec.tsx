@@ -10,7 +10,7 @@ const mockNavigate = jest.fn();
 let mockedLocation = jest.fn(() => ({ search: `?token=78df6g87f87989sfd` }));
 jest.mock('react-router-dom', () => {
   return {
-    useNavigate: () => mockNavigate,
+    useNavigate: () => mockNavigate(),
     useLocation: jest.fn(() => {
       return mockedLocation();
     }),
@@ -37,6 +37,9 @@ describe('ResetPassword page', () => {
   it('should be able to change password', async () => {
     const password = faker.string.alphanumeric(15);
 
+    const navigate = jest.fn();
+    mockNavigate.mockReturnValueOnce(navigate);
+
     apiMock.onPost('/password/reset').reply(200);
 
     const { getByText, getByPlaceholderText } = render(<ResetPassword />);
@@ -52,11 +55,14 @@ describe('ResetPassword page', () => {
       fireEvent.click(buttonElement);
     });
 
-    expect(mockNavigate).toHaveBeenCalledWith('/');
+    expect(navigate).toHaveBeenCalledWith('/');
   });
 
   it('should not be able to change password with invalid data', async () => {
     apiMock.onPost('/password/reset').reply(200);
+
+    const navigate = jest.fn();
+    mockNavigate.mockReturnValueOnce(navigate);
 
     const { getByText } = render(<ResetPassword />);
 
@@ -67,11 +73,14 @@ describe('ResetPassword page', () => {
     });
 
     expect(getByText('Senha obrigatória')).toBeInTheDocument();
-    expect(mockNavigate).not.toHaveBeenCalled();
+    expect(navigate).not.toHaveBeenCalled();
   });
 
   it('should not be able to change password', async () => {
     const password = faker.string.alphanumeric(15);
+
+    const navigate = jest.fn();
+    mockNavigate.mockReturnValueOnce(navigate);
 
     apiMock.onPost('/password/reset').reply(400);
 
@@ -88,7 +97,7 @@ describe('ResetPassword page', () => {
       fireEvent.click(buttonElement);
     });
 
-    expect(mockNavigate).not.toHaveBeenCalledWith('/');
+    expect(navigate).not.toHaveBeenCalled();
     expect(mockedAddToast).toHaveBeenCalledWith({
       type: 'error',
       title: 'Erro ao resetar senha',
@@ -98,6 +107,9 @@ describe('ResetPassword page', () => {
 
   it('should not be able to change password without token', async () => {
     const password = faker.string.alphanumeric(15);
+
+    const navigate = jest.fn();
+    mockNavigate.mockReturnValueOnce(navigate);
 
     apiMock.onPost('/password/reset').reply(200);
 
@@ -116,6 +128,6 @@ describe('ResetPassword page', () => {
       fireEvent.click(buttonElement);
     });
 
-    expect(mockNavigate).not.toHaveBeenCalledWith('/');
+    expect(navigate).not.toHaveBeenCalled();
   });
 });
