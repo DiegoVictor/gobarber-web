@@ -11,26 +11,6 @@ import { useToast } from '../../hooks/toast';
 import { useAuth } from '../../hooks/auth';
 import { Container, Content, AvatarInput } from './styles';
 
-interface ProfileFormData {
-  name: string;
-  email: string;
-  old_password: string;
-  password: string;
-  password_confirmation: string;
-}
-
-const Profile: React.FC = () => {
-  const formRef = useRef<FormHandles>(null);
-  const { addToast } = useToast();
-  const navigate = useNavigate();
-
-  const { user, updateUser } = useAuth();
-
-  const handleSubmit = useCallback(
-    async (data: ProfileFormData) => {
-      try {
-        formRef.current?.setErrors({});
-
 const schema = Yup.object().shape({
   name: Yup.string().required('Nome obrigatório'),
   email: Yup.string()
@@ -54,21 +34,7 @@ const Profile: React.FC = () => {
   const navigate = useNavigate();
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-        await schema.validate(data, { abortEarly: false });
-
-        const { name, email, old_password, password, password_confirmation } =
-          data;
-        const formData = {
-          name,
-          email,
-          ...(old_password
-            ? {
-                old_password,
-                password,
-                password_confirmation,
-              }
-            : {}),
-        };
+  const { user, updateUser } = useAuth();
 
         const response = await api.put('/profile', formData);
         updateUser(response.data);
