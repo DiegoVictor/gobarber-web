@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, ChangeEvent } from 'react';
+import React, { useCallback, ChangeEvent, FormEvent, useState } from 'react';
 import { FiMail, FiLock, FiUser, FiCamera, FiArrowLeft } from 'react-icons/fi';
 import * as Yup from 'yup';
 import { Link, useNavigate } from 'react-router-dom';
@@ -36,31 +36,57 @@ const Profile: React.FC = () => {
 
   const { user, updateUser } = useAuth();
 
-        const response = await api.put('/profile', formData);
-        updateUser(response.data);
+  const handleSubmit = async (
+    event: FormEvent<HTMLFormElement>,
+  ): Promise<void> => {
+    event.preventDefault();
+    setErrors({});
+
+    try {
+      const formData = new FormData(event.currentTarget);
+      const { name, email, old_password, password, password_confirmation } =
+        Object.fromEntries(formData.entries());
+
+      await schema.validate(
+        { name, email, old_password, password, password_confirmation },
+        { abortEarly: false },
+      );
+
+      const data = {
+        name,
+        email,
+        ...(old_password
+          ? {
+              old_password,
+              password,
+              password_confirmation,
+            }
+          : {}),
+      };
+
+      const response = await api.put('/profile', data);
+
+      updateUser(response.data);
+      addToast({
+        type: 'success',
+        title: 'Perfil atualizado!',
+        description:
+          'Suas informações do perfil foram atualizadas com sucesso!',
+      });
+      navigate('/dashboard');
+    } catch (err) {
+      if (err instanceof Yup.ValidationError) {
+        setErrors(getValidationErrors(err));
+      } else {
         addToast({
-          type: 'success',
-          title: 'Perfil atualizado!',
+          type: 'error',
+          title: 'Erro na atualização',
           description:
-            'Suas informações do perfil foram atualizadas com sucesso!',
+            'Ocorreu um erro ao atualizar o perfil, tente novamente.',
         });
-        navigate('/dashboard');
-      } catch (err) {
-        if (err instanceof Yup.ValidationError) {
-          const errors = getValidationErrors(err);
-          formRef.current?.setErrors(errors);
-        } else {
-          addToast({
-            type: 'error',
-            title: 'Erro na atualização',
-            description:
-              'Ocorreu um erro ao atualizar o perfil, tente novamente.',
-          });
-        }
       }
-    },
-    [addToast, navigate, updateUser],
-  );
+    }
+  };
 
   const handleAvatarChange = useCallback(
     async (event: ChangeEvent<HTMLInputElement>) => {
